@@ -20,6 +20,7 @@ module.exports = function(grunt) {
 		if (grunt.option('push')) {	pull = false; }
 		if (grunt.option('pull')) { push = false; }
 		if ( ! pull && ! push) { pull = true; push = true; }
+		pull = true; push = false; // Turn off pushes
 
 		if (files.length) {
 			files.forEach(function (file) {
@@ -196,7 +197,5 @@ module.exports = function(grunt) {
 			fs.remove('lokalise/');
 			done(true);
 		}
-
 	});
-
 };
