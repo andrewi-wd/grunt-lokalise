@@ -35,7 +35,6 @@ module.exports = function(grunt) {
 						'-F "fill_empty=0" ' +
 						'-F "distinguish=1" ' +
 						'-F "hidden=0"';
-
 				filesOriginalPaths[fileName] = file;
 				
 				if (pushLanguages !== 'all' && pushLanguages.indexOf(language) === -1) { return; }
@@ -119,7 +118,7 @@ module.exports = function(grunt) {
      			'-d "api_token=' + options.apiToken + '" ' +
      			'-d "id=' + options.projectId + '" ' +
      			'-d "type=json" ' +
-     			'-d "use_original=1" ';
+     			'-d "use_original=0" ';
 
      		console.log('Generating bundle...');
 
@@ -189,15 +188,9 @@ module.exports = function(grunt) {
 			console.log('Writing ' + filenames.length + ' files...');
 
 			filenames.forEach(function (filename) {
-				var parts = filename.split('/'),
-					language = parts[1],
-					fileName = parts[2],
-					original = filesOriginalPaths[fileName],
-					originalParts = original.split('/');
-
-				originalParts[originalParts.length - 2] = language;
-
-				fs.copy(filename, originalParts.join('/'), { force: true });
+				var parts = filename.split('/');
+				var destination = options.dir + '/' + parts[1];
+				fs.copy(filename, destination, { force: true });
 			});
 
 			fs.remove('lokalise/');
